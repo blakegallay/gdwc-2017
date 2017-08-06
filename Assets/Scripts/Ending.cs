@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Ending : MonoBehaviour {
-
+//test
 	private Text mesh;
 
 	private void Start () {
