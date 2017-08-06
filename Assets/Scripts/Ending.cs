@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Ending : MonoBehaviour {
 //test
 	private Text mesh;
+	//icon test
 
 	private void Start () {
 		mesh = GetComponent<Text>();
