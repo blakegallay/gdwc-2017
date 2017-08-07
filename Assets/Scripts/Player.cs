@@ -45,30 +45,18 @@ public class Player : MonoBehaviour {
 
 	private void Update() {
 		if (!flagged && energy > 0	) {
-			Vector2 target = GetTarget (StageCamera.angle);
+			Vector2 target = GetTarget (Camera.angle);
 			InitiateMove ((int)target.x, (int)target.y);
-		}
-		if (!flagged && touchingPortal && Input.GetKeyDown (KeyCode.Space)) {
-			float p = portal.exit.transform.position.x;
-			float q = portal.exit.transform.position.z;
-			Instantiate (teleport);
-			Instantiate (portalParticle, new Vector3 (transform.position.x, transform.position.y - 0.5f, transform.position.z), Quaternion.identity);
-			transform.position = new Vector3 (p, 1, q);
-			Stage.counter+= 1 * Stage.instance.	enemies;
-			Stage.turn++;
-			energy--;
 		}
 		if (Input.GetKeyDown (KeyCode.R) || (energy < 1 && !touchingEnd) || dead) {
 			loading = true;
 			if (stars > 0) {
-				Game.tempStars -= stars;
 				stars = 0;
 			}
 			if (!sounded) {
 				Instantiate (hurt);
 				sounded = true;
 			}
-			StartCoroutine (Stage.instance.Preload ("Live"));
 		}
 	}
 
@@ -115,7 +103,6 @@ public class Player : MonoBehaviour {
 
 	private IEnumerator Move (int i, int j) {
 		flagged = true;
-		Stage.turn++;
 		Vector3 target = new Vector3 (i, 1, j);
 		Vector3 position = transform.position;
 		Vector3 velocity = Vector3.zero;
@@ -131,14 +118,11 @@ public class Player : MonoBehaviour {
 			energy--;
 		}
 		transform.position = target;
-		Stage.counter+= 1 * Stage.instance.	enemies;
 		flagged = false;
 	}
 
 	private void OnTriggerEnter (Collider collider) {
 		if (collider.tag == "Stage Tile") {
-			StartCoroutine (Stage.instance.Preload ("Next"));
-			Game.SetStar (stars);
 			loading = true;
 			Instantiate (lvl);
 
@@ -147,8 +131,6 @@ public class Player : MonoBehaviour {
 		if (collider.tag == "Level Tile") {
 			Instantiate (lvl);
 			loading = true;
-			Game.SetStar (Game.tempStars);
-			StartCoroutine (Stage.instance.Preload ("Map"));
 			touchingEnd = true;
 		}
 		if (collider.tag == "Drain Tile") {
@@ -177,7 +159,6 @@ public class Player : MonoBehaviour {
 			Destroy (collider.gameObject);
 		}
 		if (collider.tag == "Star") {
-			Game.tempStars++;
 			stars++;
 			Instantiate (bonus);
 
@@ -188,13 +169,11 @@ public class Player : MonoBehaviour {
 			Instantiate (hurt);
 			loading = true;
 			if (stars > 0) {
-				Game.tempStars -= stars;
 				stars = 0;
 			}
-			StartCoroutine (Stage.instance.Preload ("Live"));
 		}
 		if (collider.tag == "Fire Tile") {
-			
+
 		}
 		if (collider.tag == "Door Tile") {
 			if (keys > 0) {

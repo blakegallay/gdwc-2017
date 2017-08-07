@@ -5,6 +5,6 @@ using UnityEngine;
 public class Namecard : MonoBehaviour {
 
 	void Update () {
-		transform.eulerAngles = new Vector3 (0, StageCamera.angle, 0);
+		transform.eulerAngles = new Vector3 (0, Camera.angle, 0);
 	}
 }

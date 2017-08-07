@@ -14,10 +14,10 @@ public class Star : MonoBehaviour {
 		tempPos = transform.position;
 	}
 
-void Update ()
-{
-	transform.Rotate (new Vector3 (0, 45, 0) * Time.deltaTime);
-	tempPos.y = tempVal + amplitude * Mathf.Sin(speed * Time.time);
-	transform.position = tempPos;
+	void Update () {
+		transform.Rotate (new Vector3 (0, 45, 0) * Time.deltaTime);
+		tempPos.y = tempVal + amplitude * Mathf.Sin(speed * Time.time);
+		transform.position = tempPos;
+	}
 }
-}
+	
